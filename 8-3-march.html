@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chúc mừng 8/3 - Mẹ Hương, Chị Mến & Cháu Đậu</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Quicksand:wght@300;400;500;600&display=swap");
+      :root {
+        --rose: #d4849a;
+        --rose-deep: #b85c78;
+        --rose-soft: #e8b4c4;
+        --rose-glow: rgba(212, 132, 154, 0.15);
+        --blush: #f9e4eb;
+        --cream: #fdf8f5;
+        --warm: #fef6f0;
+        --gold: #c9a96e;
+        --gold-light: #ddc9a3;
+        --text: #3d2b2b;
+        --text-mid: #6b4f4f;
+        --text-light: #9a7e7e;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Quicksand", sans-serif;
+        background: var(--cream);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+      #bgCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .preloader {
+        position: fixed;
+        inset: 0;
+        background: var(--cream);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition:
+          opacity 0.8s ease,
+          visibility 0.8s ease;
+      }
+      .preloader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .preloader-flower {
+        width: 50px;
+        height: 50px;
+        animation: preloaderSpin 2s ease-in-out infinite;
+      }
+      .preloader-flower svg {
+        fill: var(--rose);
+      }
+      @keyframes preloaderSpin {
+        0%,
+        100% {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.2) rotate(180deg);
+          opacity: 0.6;
+        }
+      }
+      section {
+        position: relative;
+        z-index: 1;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        position: relative;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 200px;
+        background: linear-gradient(to bottom, transparent, var(--cream));
+        pointer-events: none;
+      }
+      .hero-glow {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--blush) 0%, transparent 70%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.6;
+        animation: pulseGlow 6s ease-in-out infinite;
+      }
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.15);
+          opacity: 0.7;
+        }
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.45rem 1.6rem;
+        border: 1px solid var(--gold-light);
+        border-radius: 50px;
+        font-size: 0.75rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2.5rem;
+        animation: fadeIn 1s ease 0.5s both;
+      }
+      .tag .dot {
+        width: 4px;
+        height: 4px;
+        background: var(--gold);
+        border-radius: 50%;
+      }
+      .hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 300;
+        font-size: clamp(1.8rem, 4.5vw, 3rem);
+        line-height: 1.4;
+        color: var(--text-mid);
+        animation: fadeIn 1s ease 0.8s both;
+      }
+      .hero .names {
+        display: block;
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        font-style: italic;
+        font-size: clamp(2rem, 6vw, 4rem);
+        color: var(--rose-deep);
+        line-height: 1.3;
+        margin: 0.5rem 0 1rem;
+        animation: nameReveal 1.2s ease 1.1s both;
+        background: linear-gradient(
+          135deg,
+          var(--rose-deep) 0%,
+          var(--rose) 50%,
+          var(--rose-deep) 100%
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation:
+          nameReveal 1.2s ease 1.1s both,
+          shimmer 4s ease-in-out infinite 2.3s;
+      }
+      @keyframes nameReveal {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+          letter-spacing: 8px;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          letter-spacing: 0;
+        }
+      }
+      @keyframes shimmer {
+        0%,
+        100% {
+          background-position: 0% center;
+        }
+        50% {
+          background-position: 200% center;
+        }
+      }
+      .ornament {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin: 1.5rem 0;
+        animation: fadeIn 1s ease 1.4s both;
+      }
+      .ornament-line {
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--gold-light),
+          transparent
+        );
+      }
+      .ornament-diamond {
+        width: 6px;
+        height: 6px;
+        background: var(--gold);
+        transform: rotate(45deg);
+      }
+      .hero-subtitle {
+        font-size: clamp(0.95rem, 2vw, 1.15rem);
+        color: var(--text-light);
+        font-weight: 300;
+        line-height: 1.8;
+        max-width: 480px;
+        margin: 0 auto;
+        animation: fadeIn 1s ease 1.6s both;
+      }
+      .scroll-hint {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        animation: fadeIn 1s ease 2.5s both;
+      }
+      .scroll-hint span {
+        display: block;
+        width: 20px;
+        height: 32px;
+        border: 1.5px solid var(--rose-soft);
+        border-radius: 12px;
+        position: relative;
+      }
+      .scroll-hint span::after {
+        content: "";
+        width: 3px;
+        height: 6px;
+        background: var(--rose);
+        border-radius: 2px;
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: scrollDot 2s ease-in-out infinite;
+      }
+      @keyframes scrollDot {
+        0%,
+        100% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          opacity: 0.3;
+          transform: translateX(-50%) translateY(10px);
+        }
+      }
+      .letter-section {
+        padding: 6rem 2rem;
+        display: flex;
+        justify-content: center;
+      }
+      .letter {
+        max-width: 620px;
+        width: 100%;
+        background: var(--warm);
+        border-radius: 32px;
+        padding: clamp(2.5rem, 5vw, 4rem);
+        position: relative;
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.02),
+          0 4px 16px rgba(212, 132, 154, 0.06),
+          0 16px 48px rgba(212, 132, 154, 0.06);
+        border: 1px solid rgba(232, 180, 196, 0.25);
+      }
+      .letter::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 40px;
+        right: 40px;
+        height: 3px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--rose-soft),
+          var(--gold-light),
+          var(--rose-soft),
+          transparent
+        );
+        border-radius: 0 0 4px 4px;
+      }
+      .letter-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+      .letter-header .to {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        color: var(--text-light);
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+      .letter-header .to-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        font-weight: 600;
+        font-style: italic;
+        color: var(--rose-deep);
+        margin-top: 0.25rem;
+        line-height: 1.4;
+      }
+      .letter-body p {
+        font-size: 1.05rem;
+        line-height: 2.1;
+        color: var(--text-mid);
+        margin-bottom: 1.5rem;
+        text-align: justify;
+      }
+      .letter-body p:last-of-type {
+        margin-bottom: 0;
+      }
+      .letter-body .highlight {
+        color: var(--rose-deep);
+        font-weight: 600;
+      }
+      .letter-closing {
+        text-align: center;
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--blush);
+      }
+      .letter-closing .heart-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 1rem;
+      }
+      .letter-closing .heart-line span {
+        color: var(--rose-soft);
+        font-size: 0.7rem;
+      }
+      .letter-closing .heart-line .main-heart {
+        color: var(--rose);
+        font-size: 1rem;
+        animation: heartbeat 2s ease-in-out infinite;
+      }
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        15% {
+          transform: scale(1.2);
+        }
+        30% {
+          transform: scale(1);
+        }
+        45% {
+          transform: scale(1.15);
+        }
+        60% {
+          transform: scale(1);
+        }
+      }
+      .letter-closing .from {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.4rem;
+        font-style: italic;
+        color: var(--text-mid);
+      }
+      .wishes-section {
+        padding: 2rem 2rem 6rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .section-label {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .section-label h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 300;
+        font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+        color: var(--text-mid);
+      }
+      .section-label h2 em {
+        font-weight: 600;
+        color: var(--rose-deep);
+      }
+      .wishes-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+      .wish {
+        background: var(--warm);
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        border: 1px solid rgba(232, 180, 196, 0.2);
+        transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        cursor: default;
+      }
+      .wish:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 40px rgba(212, 132, 154, 0.12);
+        border-color: var(--rose-soft);
+      }
+      .wish-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.2rem;
+        font-size: 1.5rem;
+        background: var(--blush);
+        transition: transform 0.4s ease;
+      }
+      .wish:hover .wish-icon {
+        transform: scale(1.1) rotate(-5deg);
+      }
+      .wish h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        color: var(--text);
+      }
+      .wish p {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        line-height: 1.65;
+      }
+      .moments-section {
+        padding: 2rem 2rem 6rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .timeline {
+        position: relative;
+        padding-left: 36px;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          var(--rose-soft),
+          var(--gold-light),
+          var(--rose-soft)
+        );
+      }
+      .moment {
+        position: relative;
+        margin-bottom: 2.5rem;
+      }
+      .moment:last-child {
+        margin-bottom: 0;
+      }
+      .moment::before {
+        content: "";
+        position: absolute;
+        left: -29px;
+        top: 8px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--rose);
+        box-shadow: 0 0 0 4px var(--cream);
+      }
+      .moment-label {
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.3rem;
+      }
+      .moment p {
+        font-size: 0.95rem;
+        color: var(--text-mid);
+        line-height: 1.7;
+      }
+      .moment p strong {
+        color: var(--rose-deep);
+        font-weight: 600;
+      }
+      .final-section {
+        padding: 4rem 2rem 3rem;
+        text-align: center;
+      }
+      .final-message {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 300;
+        color: var(--text-mid);
+        line-height: 1.5;
+        max-width: 500px;
+        margin: 0 auto 2rem;
+      }
+      .final-message em {
+        font-weight: 600;
+        color: var(--rose-deep);
+      }
+      .sparkle-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.9rem 2.4rem;
+        background: linear-gradient(
+          135deg,
+          var(--rose) 0%,
+          var(--rose-deep) 100%
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-family: "Quicksand", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        box-shadow: 0 4px 20px rgba(184, 92, 120, 0.25);
+      }
+      .sparkle-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(184, 92, 120, 0.35);
+      }
+      .footer {
+        text-align: center;
+        padding: 3rem 2rem;
+        font-size: 0.75rem;
+        color: var(--text-light);
+        letter-spacing: 2px;
+      }
+      .footer .heart {
+        color: var(--rose);
+        margin: 0 2px;
+      }
+      .float-heart {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        font-size: 14px;
+        color: var(--rose-soft);
+        animation: floatUp linear forwards;
+      }
+      @keyframes floatUp {
+        0% {
+          opacity: 0;
+          transform: translateY(0) scale(0.5) rotate(0deg);
+        }
+        15% {
+          opacity: 0.6;
+        }
+        85% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100vh) scale(1.2) rotate(30deg);
+        }
+      }
+      .sparkle {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+      }
+      .sparkle-particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        animation: sparkBurst 0.8s ease-out forwards;
+      }
+      @keyframes sparkBurst {
+        0% {
+          opacity: 1;
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(var(--sx), var(--sy)) scale(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .chau-wish {
+        background: linear-gradient(
+          135deg,
+          var(--blush) 0%,
+          rgba(232, 180, 196, 0.3) 100%
+        );
+        border: 1px solid var(--rose-soft);
+      }
+      @media (max-width: 700px) {
+        .wishes-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 480px) {
+        .wishes-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        .letter {
+          border-radius: 24px;
+        }
+        .hero .names {
+          font-size: clamp(1.5rem, 8vw, 2.5rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preloader" id="preloader">
+      <div class="preloader-flower">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="28" r="15" fill="#d4849a" opacity="0.8" />
+          <circle cx="72" cy="44" r="15" fill="#d4849a" opacity="0.65" />
+          <circle cx="64" cy="70" r="15" fill="#d4849a" opacity="0.55" />
+          <circle cx="36" cy="70" r="15" fill="#d4849a" opacity="0.65" />
+          <circle cx="28" cy="44" r="15" fill="#d4849a" opacity="0.8" />
+          <circle cx="50" cy="50" r="9" fill="#fdf8f5" />
+        </svg>
+      </div>
+    </div>
+    <canvas id="bgCanvas"></canvas>
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-content">
+        <div class="tag">
+          <span class="dot"></span> 8/3 <span class="dot"></span> Quốc tế Phụ nữ
+          <span class="dot"></span>
+        </div>
+        <h1>Gửi đến những người phụ nữ thân yêu</h1>
+        <div class="names">Mẹ Hương · Chị Mến · Cháu Đậu</div>
+        <div class="ornament">
+          <span class="ornament-line"></span>
+          <span class="ornament-diamond"></span>
+          <span class="ornament-line"></span>
+        </div>
+        <p class="hero-subtitle">
+          Nhân ngày 8/3, con gửi đến mẹ,em gửi đến chị và cháu Đậu<br />
+          những lời chúc chân thành và yêu thương nhất.
+        </p>
+      </div>
+      <div class="scroll-hint"><span></span></div>
+    </section>
+    <section class="letter-section">
+      <div class="letter reveal">
+        <div class="letter-header">
+          <div class="to">Gửi đến</div>
+          <div class="to-name">Mẹ Hương, Chị Mến & Cháu Đậu</div>
+        </div>
+        <div class="letter-body">
+          <p>
+            <span class="highlight">Mẹ Hương</span> — Con cảm ơn mẹ đã sinh
+            thành, dưỡng dục và luôn là chỗ dựa bình yên nhất. Nhân ngày 8/3,
+            con chúc mẹ luôn khoẻ, vui và được yêu thương trọn vẹn.
+          </p>
+          <p>
+            <span class="highlight">Chị Mến</span> — Em chúc chị một ngày 8/3
+            thật ý nghĩa, luôn xinh đẹp, hạnh phúc bên gia đình. Chị là tấm
+            gương mạnh mẽ và ấm áp mà em luôn ngưỡng mộ.
+          </p>
+          <p>
+            <span class="highlight">Cháu Đậu</span> — Chú chúc cháu luôn
+            <strong>ngoan ngoãn</strong>, hay ăn chóng lớn, ngủ ngoan. Chúc cháu
+            khoẻ mạnh, vui vẻ và hay cười mỗi ngày.
+          </p>
+        </div>
+        <div class="letter-closing">
+          <div class="heart-line">
+            <span>♡</span>
+            <span class="main-heart">♥</span>
+            <span>♡</span>
+          </div>
+          <div class="from">Yêu thương — Trung Nguyên</div>
+        </div>
+      </div>
+    </section>
+    <section class="wishes-section">
+      <div class="section-label reveal">
+        <div class="ornament" style="margin-bottom: 1rem">
+          <span class="ornament-line"></span>
+          <span class="ornament-diamond"></span>
+          <span class="ornament-line"></span>
+        </div>
+        <h2>Chúc <em>Mẹ, Chị & Cháu</em></h2>
+      </div>
+      <div class="wishes-grid">
+        <div class="wish reveal">
+          <div class="wish-icon">✿</div>
+          <h3>Khoẻ mạnh</h3>
+          <p>Luôn dồi dào sức khoẻ, bình an mỗi ngày</p>
+        </div>
+        <div class="wish reveal">
+          <div class="wish-icon">♡</div>
+          <h3>Hạnh phúc</h3>
+          <p>Gia đình sum vầy, tràn ngập yêu thương</p>
+        </div>
+        <div class="wish reveal">
+          <div class="wish-icon">✦</div>
+          <h3>Thành công</h3>
+          <p>Mọi việc thuận lợi, như ý mong cầu</p>
+        </div>
+        <div class="wish reveal">
+          <div class="wish-icon">❋</div>
+          <h3>Bình an</h3>
+          <p>Tâm an, lòng vui, không lo không phiền</p>
+        </div>
+        <div class="wish reveal">
+          <div class="wish-icon">♬</div>
+          <h3>Trẻ đẹp</h3>
+          <p>Luôn tươi tắn, rạng rỡ như hoa</p>
+        </div>
+        <div class="wish reveal chau-wish">
+          <div class="wish-icon">★</div>
+          <h3>Cháu Đậu: Ngoan ngoãn, vui khoẻ</h3>
+          <p>
+            Chúc cháu hay ăn chóng lớn, ngủ ngoan, chơi ngoan và luôn cười tươi
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="moments-section">
+      <div class="section-label reveal">
+        <div class="ornament" style="margin-bottom: 1rem">
+          <span class="ornament-line"></span>
+          <span class="ornament-diamond"></span>
+          <span class="ornament-line"></span>
+        </div>
+        <h2>Gửi riêng <em>cháu Đậu</em></h2>
+      </div>
+      <div class="timeline">
+        <div class="moment reveal">
+          <div class="moment-label">Ăn ngoan</div>
+          <p>
+            Chúc cháu <strong>hay ăn chóng lớn</strong>, ăn ngon miệng để khoẻ
+            mạnh.
+          </p>
+        </div>
+        <div class="moment reveal">
+          <div class="moment-label">Ngủ ngoan</div>
+          <p>
+            Chúc cháu <strong>ngủ sâu giấc</strong>, dậy sớm tươi vui mỗi ngày.
+          </p>
+        </div>
+        <div class="moment reveal">
+          <div class="moment-label">Chơi ngoan</div>
+          <p>
+            Chúc cháu <strong>vui vẻ</strong>, chơi ngoan và hay cười để cả nhà
+            vui.
+          </p>
+        </div>
+        <div class="moment reveal">
+          <div class="moment-label">Khoẻ mạnh</div>
+          <p>Chúc cháu <strong>ít ốm</strong>, lớn nhanh và luôn rạng rỡ.</p>
+        </div>
+      </div>
+    </section>
+    <section class="final-section">
+      <div class="reveal">
+        <p class="final-message">
+          Chúc mẹ, chị và cháu Đậu<br />
+          một ngày 8/3 <em>thật ý nghĩa</em> và tràn đầy yêu thương.
+        </p>
+        <button class="sparkle-btn" id="sparkleBtn">Gửi yêu thương ♡</button>
+      </div>
+    </section>
+    <footer class="footer">
+      Made with <span class="heart">♥</span> for Mẹ Hương, Chị Mến & Cháu Đậu ·
+      8/3
+    </footer>
+    <script>
+      window.addEventListener("load", () => {
+        setTimeout(
+          () => document.getElementById("preloader").classList.add("hidden"),
+          600,
+        );
+      });
+      const canvas = document.getElementById("bgCanvas");
+      const ctx = canvas.getContext("2d");
+      let particles = [];
+      let mouse = { x: -1000, y: -1000 };
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+      document.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+      class Particle {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 2 + 0.5;
+          this.speedX = (Math.random() - 0.5) * 0.3;
+          this.speedY = (Math.random() - 0.5) * 0.3;
+          this.opacity = Math.random() * 0.3 + 0.05;
+          this.baseOpacity = this.opacity;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            this.opacity = this.baseOpacity + (1 - dist / 120) * 0.4;
+            this.x -= dx * 0.008;
+            this.y -= dy * 0.008;
+          } else {
+            this.opacity += (this.baseOpacity - this.opacity) * 0.05;
+          }
+          if (
+            this.x < -10 ||
+            this.x > canvas.width + 10 ||
+            this.y < -10 ||
+            this.y > canvas.height + 10
+          )
+            this.reset();
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(212, 132, 154, ${this.opacity})`;
+          ctx.fill();
+        }
+      }
+      for (let i = 0; i < 60; i++) particles.push(new Particle());
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+      );
+      document.querySelectorAll(".reveal").forEach((el, i) => {
+        el.style.transitionDelay = `${(i % 4) * 0.1}s`;
+        revealObserver.observe(el);
+      });
+      function spawnFloatHeart() {
+        const heart = document.createElement("span");
+        heart.className = "float-heart";
+        heart.textContent = ["♡", "♥", "✿", "❀"][Math.floor(Math.random() * 4)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.bottom = "-20px";
+        heart.style.animationDuration = 8 + Math.random() * 7 + "s";
+        heart.style.fontSize = 10 + Math.random() * 10 + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 16000);
+      }
+      setInterval(spawnFloatHeart, 2500);
+      document
+        .getElementById("sparkleBtn")
+        .addEventListener("click", function (e) {
+          const rect = this.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          for (let i = 0; i < 20; i++) {
+            const spark = document.createElement("div");
+            spark.className = "sparkle";
+            spark.style.left = cx + "px";
+            spark.style.top = cy + "px";
+            const particle = document.createElement("div");
+            particle.className = "sparkle-particle";
+            const angle = (Math.PI * 2 * i) / 20;
+            const dist = 40 + Math.random() * 80;
+            particle.style.setProperty("--sx", Math.cos(angle) * dist + "px");
+            particle.style.setProperty("--sy", Math.sin(angle) * dist + "px");
+            particle.style.background = [
+              "#d4849a",
+              "#c9a96e",
+              "#e8b4c4",
+              "#ddc9a3",
+            ][Math.floor(Math.random() * 4)];
+            particle.style.width = 3 + Math.random() * 4 + "px";
+            particle.style.height = particle.style.width;
+            spark.appendChild(particle);
+            document.body.appendChild(spark);
+            setTimeout(() => spark.remove(), 1000);
+          }
+          for (let i = 0; i < 8; i++) {
+            setTimeout(() => spawnFloatHeart(), i * 100);
+          }
+        });
+    </script>
+  </body>
+</html>
